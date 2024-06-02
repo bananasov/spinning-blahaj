@@ -9,8 +9,8 @@
 #include "blahaj/Blahaj.h"
 
 int main(int argc, char** argv) {
-    constexpr int screenWidth = 800;
-    constexpr int screenHeight = 600;
+    constexpr int screenWidth = 1280;
+    constexpr int screenHeight = 800;
 
     SetConfigFlags(FLAG_MSAA_4X_HINT | FLAG_VSYNC_HINT | FLAG_WINDOW_RESIZABLE);
     InitWindow(screenWidth, screenHeight, "SPINNING BLUE SHARK LETS GO");
@@ -55,12 +55,13 @@ int main(int argc, char** argv) {
 
             if (ui_open) {
                 rlImGuiBegin();
+                    ImGui::PushStyleVar(ImGuiStyleVar_WindowMinSize, {400.f,200.f });
 
-                    if (ImGui::Begin("Blahaj", &ui_open, ImGuiWindowFlags_NoScrollbar))
-                    {
+                    ImGui::Begin("Blahaj", &ui_open, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize);
                         ImGui::SliderFloat("Rotation Speed", &blahaj->RotationSpeed, 1.0f, 180.0f);
-                    }
+                    ImGui::End();
 
+                    ImGui::PopStyleVar();
                 rlImGuiEnd();
             }
         EndDrawing();
