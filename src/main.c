@@ -58,6 +58,7 @@ int main(int argc, char** argv)
     };
 
     bool cursor_disabled = true;
+    bool ui_enabled = true;
 
     SetTargetFPS(60);
 
@@ -69,6 +70,8 @@ int main(int argc, char** argv)
             cursor_disabled = !cursor_disabled;
             cursor_disabled ? EnableCursor() : DisableCursor();
         }
+
+        if (IsKeyPressed(KEY_P)) ui_enabled = !ui_enabled;
 
         if (IsKeyDown(KEY_UP)) shark.rotation_speed += 1.0f;
         if (IsKeyDown(KEY_DOWN)) shark.rotation_speed -= 1.0f;
@@ -86,10 +89,14 @@ int main(int argc, char** argv)
 
             EndMode3D();
 
-            DrawText("Press F to enable/disable focus", 0, 0, 20, LIGHTGRAY);
-            DrawText(TextFormat("Camera Position: %.2f, %.2f, %.2f", camera.position.x, camera.position.y,
-                            camera.position.z), 0, 20, 20, LIGHTGRAY);
-
+            if (ui_enabled)
+            {
+                DrawText("Press F to enable/disable focus", 5, 0, 20, LIGHTGRAY);
+                DrawText("Press P to toggle UI", 5, 20, 20, LIGHTGRAY);
+                DrawText(TextFormat("Camera Position: %.2f, %.2f, %.2f", camera.position.x, camera.position.y,
+                                    camera.position.z), 5, 40, 20, LIGHTGRAY);
+                DrawText(TextFormat("Rotation speed: %.2f", shark.rotation_speed), 5, 60, 20, LIGHTGRAY);
+            }
         EndDrawing();
     }
 
