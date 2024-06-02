@@ -6,7 +6,8 @@
 #define NO_FONT_AWESOME
 #include "rlImgui/rlImGui.h"
 
-#include "blahaj/Blahaj.h"
+#include "Blahaj/Blahaj.h"
+#include "CameraPresets.h"
 
 int main(int argc, char** argv) {
     constexpr int screenWidth = 1280;
@@ -42,6 +43,16 @@ int main(int argc, char** argv) {
         }
 
         if (IsKeyPressed(KEY_P)) ui_open = !ui_open;
+
+        if (IsKeyPressed(KEY_PAGE_UP)) {
+            currently_selected_preset = (currently_selected_preset + 1) % MAX_CAMERA_PRESETS;
+            SelectPreset(&camera, &presets[currently_selected_preset]);
+        }
+
+        if (IsKeyPressed(KEY_PAGE_DOWN)) {
+            currently_selected_preset = (currently_selected_preset - 1) % MAX_CAMERA_PRESETS;
+            SelectPreset(&camera, &presets[currently_selected_preset]);
+        }
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
