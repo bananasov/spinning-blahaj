@@ -1,8 +1,10 @@
 # spinning-blahaj
 A spinning blue shark from ikea.
 
+You can select a camera preset by using <kbd>PageUp</kbd> or <kbd>PageDown
+
 ## Setting Up
-To run this ridicously silly C project, you'll need [xmake](https://xmake.io/)
+To run this ridiculously silly C project, you'll need [xmake](https://xmake.io/)
 
 ```sh
 # optionally, you can set to use the clang compiler instead
@@ -17,5 +19,4 @@ All built files will go into a directory called `build/`
 - Blahal model by [TechTastic](https://github.com/TechTastic)
 
 ## Later Features
-- UI for easily changing rotation speed
 - maybe video rendering

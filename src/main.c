@@ -125,6 +125,7 @@ int main(int argc, char** argv)
 
             if (ui_enabled)
             {
+                // TODO: Make positioning better than hardcoding this bullshit lol
                 DrawText("Press F to enable/disable focus", 5, 0, 20, LIGHTGRAY);
                 DrawText("Press P to toggle UI", 5, 20, 20, LIGHTGRAY);
                 DrawText(TextFormat("Camera Position: %.2f, %.2f, %.2f", camera.position.x, camera.position.y,
@@ -137,6 +138,7 @@ int main(int argc, char** argv)
                                     100, 20, LIGHTGRAY);
                 DrawText(TextFormat("Rotation speed: %.2f", shark.rotation_speed), 5, 120, 20, LIGHTGRAY);
             }
+
         EndDrawing();
     }
 
