@@ -21,7 +21,7 @@ Blahaj::Blahaj(Model model, Texture2D texture, Vector3 position, Vector3 scale) 
 
 Blahaj::Blahaj(Model model, Texture2D texture, Vector3 position, Vector3 scale, float rotationSpeed): m_Model(model),
     m_Texture(texture),
-    m_Position(position), m_Scale(scale), m_RotationSpeed(rotationSpeed)
+    m_Position(position), m_Scale(scale), RotationSpeed(rotationSpeed)
 {
     model.materials[0].maps[MATERIAL_MAP_DIFFUSE].texture = texture;
 }
@@ -41,7 +41,7 @@ void Blahaj::Render() const
 
 void Blahaj::Rotate()
 {
-    const float newYAngle = m_RotationAxis.y + m_RotationSpeed * GetFrameTime();
+    const float newYAngle = m_RotationAxis.y + RotationSpeed * GetFrameTime();
 
     // Create quaternions for start and end positions
     const Quaternion start = QuaternionFromEuler(m_RotationAxis.z, m_RotationAxis.y,
@@ -49,7 +49,7 @@ void Blahaj::Rotate()
     const Quaternion end = QuaternionFromEuler(0, newYAngle, 0); // Rotate around Y-axis
 
     // Slerp the quaternions to get the smooth transition
-    const Quaternion slerp = QuaternionSlerp(start, end, m_RotationSpeed * GetFrameTime());
+    const Quaternion slerp = QuaternionSlerp(start, end, RotationSpeed * GetFrameTime());
 
     // Apply the new rotation to the model
     const Matrix modelTransform = QuaternionToMatrix(slerp);

@@ -25,11 +25,12 @@ int main(int argc, char** argv) {
     const Model sharkModel = LoadModel("assets/blahaj.obj");
     const Texture2D sharkTexture = LoadTexture("assets/blahaj.png");
 
-    auto blahaj = Blahaj(sharkModel, sharkTexture, (Vector3){ 0.0f, 10.0f, 0.0f });
+    const auto blahaj = new Blahaj(sharkModel, sharkTexture, (Vector3){ 0.0f, 10.0f, 0.0f });
 
     SetTargetFPS(60);
     rlImGuiSetup(true);
 
+    bool ui_open = true;
     bool cursor_disabled = true;
 
     while (!WindowShouldClose()) {
@@ -40,21 +41,32 @@ int main(int argc, char** argv) {
             cursor_disabled ? EnableCursor() : DisableCursor();
         }
 
+        if (IsKeyPressed(KEY_P)) ui_open = !ui_open;
+
         BeginDrawing();
             ClearBackground(RAYWHITE);
 
             BeginMode3D(camera);
-                blahaj.Render();
-                blahaj.Rotate();
+                blahaj->Render();
+                blahaj->Rotate();
 
                 DrawGrid(20, 10.0f);
             EndMode3D();
 
-            rlImGuiBegin();
+            if (ui_open) {
+                rlImGuiBegin();
 
-            rlImGuiEnd();
+                    if (ImGui::Begin("Blahaj", &ui_open, ImGuiWindowFlags_NoScrollbar))
+                    {
+                        ImGui::SliderFloat("Rotation Speed", &blahaj->RotationSpeed, 1.0f, 180.0f);
+                    }
+
+                rlImGuiEnd();
+            }
         EndDrawing();
     }
+
+    delete blahaj;
 
     rlImGuiShutdown();
     CloseWindow();

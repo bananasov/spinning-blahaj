@@ -12,11 +12,11 @@ public:
     void Render() const;
     void Rotate();
 
-    [[nodiscard]] float GetRotationSpeed() const { return m_RotationSpeed; }
     [[nodiscard]] Vector3 GetScale() const { return m_Scale; }
 
-    void SetRotationSpeed(const float speed) { m_RotationSpeed = speed; }
     void SetScale(const Vector3 scale) { m_Scale = scale; }
+
+    float RotationSpeed = 1.0f;
 private:
     Model m_Model;
     Texture2D m_Texture;
@@ -26,6 +26,5 @@ private:
     Vector3 m_RotationAxis = { 0.0f, 0.0f, 0.0f };
 
     float m_RotationAngle = 0.0f;
-    float m_RotationSpeed = 1.0f;
 };
 
