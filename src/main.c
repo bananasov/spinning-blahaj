@@ -31,6 +31,7 @@ void RotateBlahaj(Blahaj* blahaj) {
 }
 
 int main(int argc, char** argv) {
+    SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "SPINNING BLUE SHARK LETS GO");
 
     Camera camera = { 0 };
