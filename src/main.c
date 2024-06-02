@@ -60,7 +60,7 @@ int main(int argc, char** argv)
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "SPINNING BLUE SHARK LETS GO");
 
-    struct nk_context *ctx = InitNuklear(10);
+    struct nk_context *ctx = InitNuklear(13);
 
     Camera camera = { 0 };
     camera.fovy = 45.0f; // Camera field-of-view Y
@@ -122,13 +122,12 @@ int main(int argc, char** argv)
             ClearBackground(RAYWHITE);
 
             if (ui_enabled) {
-                if (nk_begin(ctx, "Blahaj", nk_rect(100, 100, 220, 220),
+                if (nk_begin(ctx, "Blahaj", nk_rect(100, 100, 330, 220),
                     NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_CLOSABLE)) {
-                    nk_layout_row_static(ctx, 50, 150, 1);
+                    nk_layout_row(ctx, NK_STATIC, 30, 2, (float[]){ 120, 150 });
 
-                    if (nk_button_label(ctx, "Button")) {
-                        // Button was clicked!
-                    }
+                    nk_label(ctx, "Rotation Speed", NK_TEXT_LEFT);
+                    nk_slider_float(ctx, 0.0f, &shark.rotation_speed, 180.0f, 0.5f);
                 }
                 nk_end(ctx);
             }
