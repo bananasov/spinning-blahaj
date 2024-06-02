@@ -1,5 +1,4 @@
 #include "raylib.h"
-#include "raymath.h"
 
 #include "imgui.h"
 
@@ -17,11 +16,9 @@ int main(int argc, char** argv) {
     InitWindow(screenWidth, screenHeight, "SPINNING BLUE SHARK LETS GO");
 
     Camera camera = {};
-    camera.position = (Vector3){ 30.0f, 15.0f, 0.0f };
-    camera.target = (Vector3){ 0.0f, 10.0f, 0.0f };
-    camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
     camera.fovy = 45.0f;
     camera.projection = CAMERA_PERSPECTIVE;
+    SelectPreset(&camera, &presets[0]); // Default preset
 
     const Model sharkModel = LoadModel("assets/blahaj.obj");
     const Texture2D sharkTexture = LoadTexture("assets/blahaj.png");
@@ -74,6 +71,21 @@ int main(int argc, char** argv) {
 
                     ImGui::Begin("Camera Settings", &ui_open, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize);
                         ImGui::SliderFloat("FOV", &camera.fovy, 1.0f, 180.0f);
+
+                        if (ImGui::BeginCombo("##presets", presets[currently_selected_preset].preset_name)) {
+                            for (int n = 0; n < IM_ARRAYSIZE(presets); n++) {
+                                auto preset = presets[n];
+                                const bool is_selected = (currently_selected_preset == n);
+
+                                if (ImGui::Selectable(preset.preset_name, is_selected)) {
+                                    currently_selected_preset = n;
+                                    SelectPreset(&camera, &presets[currently_selected_preset]);
+                                }
+                                if (is_selected) ImGui::SetItemDefaultFocus();
+                            }
+
+                            ImGui::EndCombo();
+                        }
                     ImGui::End();
 
                     ImGui::PopStyleVar();
