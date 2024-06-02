@@ -61,6 +61,10 @@ int main(int argc, char** argv) {
                         ImGui::SliderFloat("Rotation Speed", &blahaj->RotationSpeed, 1.0f, 180.0f);
                     ImGui::End();
 
+                    ImGui::Begin("Camera Settings", &ui_open, ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoResize);
+                        ImGui::SliderFloat("FOV", &camera.fovy, 1.0f, 180.0f);
+                    ImGui::End();
+
                     ImGui::PopStyleVar();
                 rlImGuiEnd();
             }
