@@ -1,6 +1,9 @@
 #include <raylib.h>
 #include <raymath.h>
 
+#define RAYLIB_NUKLEAR_IMPLEMENTATION
+#include "raylib-nuklear.h"
+
 #define MAX_CAMERA_PRESETS  2
 
 typedef struct Blahaj
@@ -57,6 +60,8 @@ int main(int argc, char** argv)
     SetConfigFlags(FLAG_WINDOW_RESIZABLE);
     InitWindow(800, 600, "SPINNING BLUE SHARK LETS GO");
 
+    struct nk_context *ctx = InitNuklear(10);
+
     Camera camera = { 0 };
     camera.fovy = 45.0f; // Camera field-of-view Y
     camera.projection = CAMERA_PERSPECTIVE; // Camera mode type
@@ -88,6 +93,8 @@ int main(int argc, char** argv)
 
     while (!WindowShouldClose())
     {
+        UpdateNuklear(ctx);
+
         if (!cursor_disabled) UpdateCamera(&camera, CAMERA_FREE);
 
         if (IsKeyPressed(KEY_F)) {
@@ -114,6 +121,18 @@ int main(int argc, char** argv)
 
             ClearBackground(RAYWHITE);
 
+            if (ui_enabled) {
+                if (nk_begin(ctx, "Blahaj", nk_rect(100, 100, 220, 220),
+                    NK_WINDOW_BORDER|NK_WINDOW_MOVABLE|NK_WINDOW_CLOSABLE)) {
+                    nk_layout_row_static(ctx, 50, 150, 1);
+
+                    if (nk_button_label(ctx, "Button")) {
+                        // Button was clicked!
+                    }
+                }
+                nk_end(ctx);
+            }
+
             BeginMode3D(camera);
 
                 DrawModelEx(shark.model, shark.position, shark.rotation_axis, shark.rotation_angle, shark.scale, WHITE);
@@ -123,8 +142,9 @@ int main(int argc, char** argv)
 
             EndMode3D();
 
-            if (ui_enabled)
-            {
+            if (ui_enabled) {
+                DrawNuklear(ctx);
+
                 // TODO: Make positioning better than hardcoding this bullshit lol
                 DrawText("Press F to enable/disable focus", 5, 0, 20, LIGHTGRAY);
                 DrawText("Press P to toggle UI", 5, 20, 20, LIGHTGRAY);
@@ -144,6 +164,8 @@ int main(int argc, char** argv)
 
     UnloadTexture(shark_texture);
     UnloadModel(shark_model);
+
+    UnloadNuklear(ctx);
 
     CloseWindow();
 
