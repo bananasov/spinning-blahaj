@@ -2,7 +2,7 @@
 A spinning blue shark from ikea.
 
 ## Setting Up
-To run this ridicously silly C project, you'll need [Xmake](https://xmake.io/)
+To run this ridicously silly C project, you'll need [xmake](https://xmake.io/)
 
 ```sh
 # optionally, you can set to use the clang compiler instead
@@ -15,3 +15,7 @@ All built files will go into a directory called `build/`
 
 ## Credits
 - Blahal model by [TechTastic](https://github.com/TechTastic)
+
+## Later Features
+- UI for easily changing rotation speed
+- maybe video rendering
